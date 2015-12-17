@@ -20,6 +20,8 @@ nmap <silent>gi <Plug>(nyaovim-popup-tooltip-toggle)
 vmap <silent>gi <Plug>(nyaovim-popup-tooltip-toggle)
 ```
 
+When you enter `gi` on path to image (both local path and remote http address will do), NyaoVim shows up image tooltip as above screenshot.  Popup emerges on the cursor.
+
 And three functions are available.
 
 - `TogglePopupTooltip(path, line, col)`
