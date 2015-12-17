@@ -24,7 +24,7 @@ function! OpenPopupTooltip(path, line, col)
     call rpcnotify(0, 'popup-tooltip:open', a:path, a:line, a:col)
 endfunction
 function! ClosePopupTooltip()
-    call rpcnotify(0, 'popup-tooltip:open')
+    call rpcnotify(0, 'popup-tooltip:close')
 endfunction
 
 nnoremap <silent><Plug>(nyaovim-popup-tooltip-toggle) :<C-u>call <SID>open_popup_tooltip('<C-r><C-p>', line('.') - line('w0') + 1, virtcol('.'))<CR>
