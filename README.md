@@ -9,6 +9,13 @@ This is a [NyaoVim](https://github.com/rhysd/NyaoVim) UI plugin to provide popup
 
 This is normal Neovim plugin.  Please put this repo to the directory in `runtimepath`.  If you use a plugin manager, install this plugin as other plugins.
 
+After installing this repository as Neovim plugin, put `<popup-tooltip>` component to your `~/.config/nyaovimrc.html`.
+
+```html
+<neovim-editor id="nyaovim-editor" argv$="[[argv]]"></neovim-editor>
+<popup-tooltip editor="[[editor]]"></popup-tooltip>
+```
+
 ## Usage
 
 This plugin defines two `<Plug>(nyaovim-popup-tooltip-toggle)` mapping on normal mode and visual mode.  You can map it.
