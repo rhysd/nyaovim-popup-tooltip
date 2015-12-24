@@ -13,18 +13,19 @@ After installing this repository as Neovim plugin, put `<popup-tooltip>` compone
 
 ```html
 <neovim-editor id="nyaovim-editor" argv$="[[argv]]"></neovim-editor>
+<!-- Add below line -->
 <popup-tooltip editor="[[editor]]"></popup-tooltip>
 ```
 
 ## Usage
 
-This plugin defines two `<Plug>(nyaovim-popup-tooltip-toggle)` mapping on normal mode and visual mode.  You can map it.
+This plugin defines two `<Plug>(nyaovim-popup-tooltip-open)` mapping on normal mode and visual mode.  You can map it.
 
 If `g:nyaovim_popup_tooltip_default_mapping` is not set to `0`, this plugin overrides `gi` mapping.  Below mappings are defined.
 
 ```vim
-nmap <silent>gi <Plug>(nyaovim-popup-tooltip-toggle)
-vmap <silent>gi <Plug>(nyaovim-popup-tooltip-toggle)
+nmap <silent>gi <Plug>(nyaovim-popup-tooltip-open)
+vmap <silent>gi <Plug>(nyaovim-popup-tooltip-open)
 ```
 
 When you enter `gi` on path to image (both local path and remote http address will do), NyaoVim shows up image tooltip as above screenshot.  Popup emerges on the cursor.
