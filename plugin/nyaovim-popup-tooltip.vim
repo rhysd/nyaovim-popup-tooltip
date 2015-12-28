@@ -1,4 +1,4 @@
-if get(g:, 'loaded_nyaovim_popup_tooltip', 0) || get(g:, 'nyaovim_version', '') ==# ''
+if get(g:, 'loaded_nyaovim_popup_tooltip', 0) || !exists('g:nyaovim_version')
     finish
 endif
 
