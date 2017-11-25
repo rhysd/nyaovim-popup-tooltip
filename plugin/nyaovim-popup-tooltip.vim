@@ -8,8 +8,27 @@ augroup nyaovim-popup-tooltip
     autocmd!
 augroup END
 
+if has('win32') || has('win64')
+  function! s:is_absolute(path) abort
+    return a:path =~# '^[a-zA-Z]:[/\\]'
+  endfunction
+  let s:sep = '\'
+else
+  function! s:is_absolute(path) abort
+    return a:path[0] ==# '/'
+  endfunction
+  let s:sep = '/'
+endif
+
+function! s:resolve_path(path) abort
+    if s:is_absolute(a:path)
+        return a:path
+    endif
+    return expand('%:p:h') . s:sep . a:path
+endfunction
+
 function! s:open_popup_tooltip(path, line, col) abort
-    call rpcnotify(0, 'popup-tooltip:open', a:path, a:line, a:col)
+    call rpcnotify(0, 'popup-tooltip:open', s:resolve_path(a:path), a:line, a:col)
     augroup nyaovim-popup-tooltip
         autocmd!
         autocmd CursorMoved,CursorMovedI * call rpcnotify(0, 'popup-tooltip:close') | autocmd! nyaovim-popup-tooltip
@@ -17,10 +36,10 @@ function! s:open_popup_tooltip(path, line, col) abort
 endfunction
 
 function! TogglePopupTooltip(path, line, col)
-    call rpcnotify(0, 'popup-tooltip:toggle', a:path, a:line, a:col)
+    call rpcnotify(0, 'popup-tooltip:toggle', s:resolve_path(a:path), a:line, a:col)
 endfunction
 function! OpenPopupTooltip(path, line, col)
-    call rpcnotify(0, 'popup-tooltip:open', a:path, a:line, a:col)
+    call rpcnotify(0, 'popup-tooltip:open', s:resolve_path(a:path), a:line, a:col)
 endfunction
 function! ClosePopupTooltip()
     call rpcnotify(0, 'popup-tooltip:close')
