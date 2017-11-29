@@ -39,8 +39,12 @@ function! s:resolve_path(path) abort
     return expand('%:p:h') . s:sep . a:path
 endfunction
 
-function! s:open_popup_tooltip(path, line, col) abort
-    call rpcnotify(0, 'popup-tooltip:open', s:resolve_path(a:path), a:line, a:col)
+function! s:show_tooltip_for_under_cursor(line, col) abort
+    let path = expand('<cfile>:p')
+    if path ==# ''
+        return
+    endif
+    call rpcnotify(0, 'popup-tooltip:open', path, a:line, a:col)
     augroup nyaovim-popup-tooltip
         autocmd!
         autocmd CursorMoved,CursorMovedI * call rpcnotify(0, 'popup-tooltip:close') | autocmd! nyaovim-popup-tooltip
@@ -75,8 +79,8 @@ function! s:calc_virtline() abort
     return l + col('.') / width + 1
 endfunction
 
-nnoremap <silent><Plug>(nyaovim-popup-tooltip-open) :<C-u>call <SID>open_popup_tooltip('<C-r><C-p>', <SID>calc_virtline(), virtcol('.'))<CR>
-vnoremap <silent><Plug>(nyaovim-popup-tooltip-open) y:call <SID>open_popup_tooltip('<C-r>"', <SID>calc_virtline(), virtcol('.'))<CR>
+nnoremap <silent><Plug>(nyaovim-popup-tooltip-open) :<C-u>call <SID>show_tooltip_for_under_cursor(<SID>calc_virtline(), virtcol('.'))<CR>
+vnoremap <silent><Plug>(nyaovim-popup-tooltip-open) y:call <SID>show_tooltip_for_under_cursor(<SID>calc_virtline(), virtcol('.'))<CR>
 if g:nyaovim_popup_tooltip_default_mapping
     nmap <silent>gi <Plug>(nyaovim-popup-tooltip-open)
     vmap <silent>gi <Plug>(nyaovim-popup-tooltip-open)
