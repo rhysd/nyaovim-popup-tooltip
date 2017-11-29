@@ -8,6 +8,15 @@ augroup nyaovim-popup-tooltip
     autocmd!
 augroup END
 
+function! s:has_scheme(path) abort
+    for s in ['http://', 'https://', 'file://']
+        if stridx(a:path, s) == 0
+            return 1
+        endif
+    endfor
+    return 0
+endfunction
+
 if has('win32') || has('win64')
   function! s:is_absolute(path) abort
     return a:path =~# '^[a-zA-Z]:[/\\]'
@@ -21,6 +30,9 @@ else
 endif
 
 function! s:resolve_path(path) abort
+    if s:has_scheme(a:path)
+        return a:path
+    endif
     if s:is_absolute(a:path)
         return a:path
     endif
